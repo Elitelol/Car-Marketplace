@@ -1,5 +1,8 @@
 const User = require("../models/user.model");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const test = "ab";
 
 const signIn = async (req, res) => {
     const {email, password } = req.body;
@@ -16,8 +19,8 @@ const signIn = async (req, res) => {
         if(!passwordCorrect){
             return res.status(400).json({message: "Invalid password."});
         }
-
-        res.status(200).json(user.email);
+        const token = jwt.sign({email: user.email}, test, { expiresIn: "1h" });
+        res.header('auth-token', token).send(token);
     }
     catch(error){
         res.status(500).json({message: "Something wrong with server."});
