@@ -17,6 +17,9 @@ class Navbar extends Component {
               <a class="btn btn-sm btn-outline-secondary" href="/register">
                 Sign up
               </a>
+              <a class="btn btn-sm btn-outline-primary" href="/login">
+                Sign in
+              </a>
             </div>
           </div>
         </header>
