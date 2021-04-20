@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./../styles/main.scss";
+import logo from "./../logo.svg";
 
 class Navbar extends Component {
   render() {
@@ -10,7 +11,8 @@ class Navbar extends Component {
           <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-8 text-center">
               <Link className="blog-header-logo text-dark" to="/">
-                le Car of ze market of ze place
+                <img src={logo} width="75px" height="75px" alt="react-logo" />
+                <strong>Car marketplace</strong>
               </Link>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -26,9 +28,11 @@ class Navbar extends Component {
 
         <div class="nav-scroller py-1 mb-2">
           <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary" href="/upload">
-              Upload
-            </a>
+            <Link to="/upload">
+              <button class="btn btn-primary" href="/upload">
+                Upload
+              </button>
+            </Link>
             <a className="p-2 link-secondary" href="#">
               About
             </a>
