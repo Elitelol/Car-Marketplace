@@ -5,9 +5,10 @@ class CarList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
+        <div className="row mb-2">
           <Car />
-          <Car></Car>
+          <Car />
+          <Car />
         </div>
       </React.Fragment>
     );
