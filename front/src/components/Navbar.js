@@ -14,7 +14,7 @@ class Navbar extends Component {
               </Link>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-              <a class="btn btn-sm btn-outline-secondary" href="/register">
+              <a class="btn btn-sm btn-outline-secondary mr-1" href="/register">
                 Sign up
               </a>
               <a class="btn btn-sm btn-outline-primary" href="/login">
