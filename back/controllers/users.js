@@ -19,8 +19,10 @@ const signIn = async (req, res) => {
         if(!passwordCorrect){
             return res.status(400).json({message: "Invalid password."});
         }
+        
         const token = jwt.sign({email: user.email}, test, { expiresIn: "1h" });
         res.header('auth-token', token).send(token);
+        
     }
     catch(error){
         res.status(500).json({message: "Something wrong with server."});
@@ -43,7 +45,8 @@ const signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({name, email, password: hashedPassword});
 
-        res.status(201).json({newUser});
+        const token = jwt.sign({email: newUser.email}, test, { expiresIn: "1h" });
+        res.header('auth-token', token).send(token);
     }
     catch(error){
         res.status(500).json({message: "Something wrong with server."});
