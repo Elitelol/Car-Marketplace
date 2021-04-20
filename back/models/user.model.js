@@ -8,10 +8,10 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-    cars: {
+    cars: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Car"
-    }
+    }]
 });
 
 const User = mongoose.model("User", userSchema);
