@@ -14,6 +14,6 @@ const carSchema = mongoose.Schema({
     }
 });
 
-const User = mongoose.model("Car", carSchema);
+const Car = mongoose.model("Car", carSchema);
 
-module.exports = carSchema;
+module.exports = Car;
