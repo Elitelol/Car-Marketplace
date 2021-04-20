@@ -26,10 +26,13 @@ class Navbar extends Component {
 
         <div class="nav-scroller py-1 mb-2">
           <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary" href="#">
-              Many
+            <a class="p-2 link-secondary" href="/upload">
+              Upload
             </a>
-            <a class="p-2 link-secondary" href="#">
+            <a className="p-2 link-secondary" href="#">
+              About
+            </a>
+            {/* <a class="p-2 link-secondary" href="#">
               Links
             </a>
             <a class="p-2 link-secondary" href="#">
@@ -46,7 +49,7 @@ class Navbar extends Component {
             </a>
             <a class="p-2 link-secondary" href="#">
               Politics
-            </a>
+            </a> */}
           </nav>
         </div>
       </div>
