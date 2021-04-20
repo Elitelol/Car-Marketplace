@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import CarList from "./components/CarList";
 import Details from "./components/Details";
 import Upload from "./components/Upload";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" component={CarList}></Route>
           <Route path="/details" component={Details}></Route>
           <Route path="/upload" component={Upload}></Route>
+          <Route path="/register" component={Register}></Route>
         </Switch>
       </main>
     </React.Fragment>
