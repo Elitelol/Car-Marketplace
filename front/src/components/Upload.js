@@ -4,33 +4,39 @@ export default class Upload extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <h3>Upload an ad</h3>
-          <form>
-            <div>
-              <label>
-                Make
-                <select>
-                  <option value="audi">AUDI</option>
-                  <option value="BMW">BMW</option>
-                </select>
-              </label>
-              <label>
-                Model
-                <select>
-                  <option value="audi">AUDI</option>
-                  <option value="BMW">BMW</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label>
-                Description
-                <textarea></textarea>
-              </label>
-            </div>
-          </form>
-        </div>
+        <form className="form">
+          <div className="form-group">
+            <label for="upload-car-manufacturer">Manufacturer</label>
+            <input
+              className="form-control"
+              id="upload-car-manufacturer"
+              type="text"
+            ></input>
+          </div>
+          <div className="form-group">
+            <label for="upload-car-model">Model</label>
+            <input
+              className="form-control"
+              id="upload-car-model"
+              type="text"
+            ></input>
+          </div>
+          <div className="form-group">
+            <label for="upload-car-year">Year</label>
+            <input
+              className="form-control"
+              id="upload-car-year"
+              type="text"
+            ></input>
+          </div>
+          <div className="form-group">
+            <label for="upload-car-image">Image</label>
+            <input className="d-flex" id="upload-car-image" type="file"></input>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Upload
+          </button>
+        </form>
       </React.Fragment>
     );
   }

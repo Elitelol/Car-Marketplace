@@ -14,10 +14,10 @@ function App() {
       <main className="container">
         <Switch>
           <Route exact path="/" component={CarList}></Route>
-          <Route path="/details" component={Details}></Route>
-          <Route path="/upload" component={Upload}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/login" component={Login}></Route>
+          <Route path="/upload" component={Upload}></Route>
+          <Route path="/details" component={Details}></Route>
         </Switch>
       </main>
     </React.Fragment>
