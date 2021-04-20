@@ -1,7 +1,27 @@
 const User = require("../models/user.model");
+const bcrypt = require('bcrypt');
 
-const signIn = (req, res) => {
+const signIn = async (req, res) => {
     const {email, password } = req.body;
+
+    try{
+        const user = await User.findOne({email});
+
+        if(!user){
+            return res.status(400).json({message: "Email doesn't exist"});
+        }
+
+        const passwordCorrect = await bcrypt.compare(password, user.password);
+
+        if(!passwordCorrect){
+            return res.status(400).json({message: "Invalid password."});
+        }
+
+        res.status(200).json(user.email);
+    }
+    catch(error){
+        res.status(500).json({message: "Something wrong with server."});
+    }
 };
 
 const signUp = async (req, res) => {
@@ -17,7 +37,8 @@ const signUp = async (req, res) => {
             return res.status(400).json({message: "Passwords don't match."});
         }
 
-        const newUser = await User.create({name, email, password});
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User.create({name, email, password: hashedPassword});
 
         res.status(201).json({newUser});
     }
