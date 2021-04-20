@@ -6,7 +6,11 @@ const userSchema = mongoose.Schema({
     password: {type: String, required: true },
     joined: {
         type: Date,
-        default: Date.now()
+        default: new Date()
+    },
+    cars: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Car"
     }
 });
 
