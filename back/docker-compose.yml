@@ -22,6 +22,8 @@ services:
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - ./docker/.data/db:/var/lib/mongodb
     networks:
       - nodeapp-network
 
