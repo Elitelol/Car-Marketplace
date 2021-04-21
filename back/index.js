@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const userRoutes = require('./routes/users');
-const carRoutes = require('./routes/cars');
+const userRoutes = require('./routes/users.routes');
+const carRoutes = require('./routes/cars.routes');
 const app = express();
 
 app.use(express.json());
@@ -18,6 +18,6 @@ app.get("/", (req, res) => {
     res.send("CAR GOES VROOOOOM");
 });
 
-mongoose.connect(DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     .then(() => app.listen(PORT, () => console.log(`Server running on ${PORT}`)))
     .catch((error) => console.log(error.message));
