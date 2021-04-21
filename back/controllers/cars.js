@@ -2,13 +2,12 @@ const User = require("../models/user.model");
 const Car = require("../models/car.model");
 
 const addCar = async (req, res) => {
-    const {username} = req.params;
+    const {username} = req.username;
     const {make, model, price, picture} = req.body;
 
     try{
         const user = await User.findOne({username});
         const newCar = await Car.create({make, model, price, picture, ownerUsername: username, owner: user._id});
-
         user.cars.push(newCar);
         await user.save();
 

@@ -11,7 +11,8 @@ const auth = (req, res, next) => {
 
     try{
         const verified = jwt.verify(token, test);
-        req.username = verified.username;
+        req.username = verified
+        console.log(req.username);
         next();
     }
     catch{
