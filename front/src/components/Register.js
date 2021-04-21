@@ -1,17 +1,21 @@
+import axios from "axios";
 import React, { Component } from "react";
 
 export default class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.API_URL = "http://localhost:5000";
+    this.register = this.register.bind(this);
   }
 
-  register = () => {
+  register(event) {
+    event.preventDefault();
     console.log("called register function");
-    fetch(this.API_URL + "/users/signUp")
+    axios
+      .post(this.API_URL + "/users/signUp")
       .then((res) => res.json())
       .then((data) => console.log("Request data: ", data));
-  };
+  }
 
   render() {
     return (
