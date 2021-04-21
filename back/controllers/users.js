@@ -33,6 +33,10 @@ const signUp = async (req, res) => {
     const {name, username, password, passwordRepeated} = req.body;
 
     try{
+        if(!name || !username || !password || !passwordRepeated){
+            return res.status(400).json({message: "Missing fields"});
+        }
+
         const existingUser = await User.findOne({username});
 
         if(existingUser){
