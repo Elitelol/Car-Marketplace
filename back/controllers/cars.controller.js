@@ -1,8 +1,9 @@
 const User = require("../models/user.model");
 const Car = require("../models/car.model");
+const { mongoose } = require("mongoose");
 
 const addCar = async (req, res) => {
-    const {username} = req.username;
+    const username = req.currentUser.username;
     const {make, model, price, picture} = req.body;
 
     try{
@@ -75,42 +76,38 @@ const getAllCars = async (req, res) => {
 }
 
 const deleteCar = async (req, res) => {
-    const {username} = req.username;
-    const carId = req.body.carId;
+    const {carId} = req.params
+    const car = await Car.findById(carId);
 
-    const user = await User.find({username}).populate("cars");
-    const cars = user[0]["cars"];
-
-    for(i = 0; i < cars.length; i++){
-        const car = cars[i];
-
-        if(car._id == carId){
-            await Car.findByIdAndDelete(carId); 
-            return res.status(200).json({message: "Car deleted."});
-        }
+    if(!car){
+        return res.status(404).json({message: "Car doesn't exist"});
     }
 
-    res.status(400).json({message: "Car doesn't exist"});
+    if(req.currentUser.username !== car.ownerUsername){
+        return res.status(403).json({message: "Unauthorized"});
+    }
+
+    await Car.findByIdAndDelete(carId);
+
+    return res.status(200).json({message: "Car deleted."});
 }
 
 const updateCar = async (req, res) => {
-    const {username} = req.username;
-    const {carId, make, model, price, picture} = req.body;
-    const updatedCar = {make, model, price, picture};
+    const updatedCar = {make, model, price, picture} = req.body;
+    const {carId} = req.params
+    const car = await Car.findById(carId);
 
-    const user = await User.find({username}).populate("cars");
-    const cars = user[0]["cars"];
-
-    for(i = 0; i < cars.length; i++){
-        const car = cars[i];
-
-        if(car._id == carId){
-            await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
-            return res.status(200).json({message: "Car updated."});
-        }
+    if(!car){
+        return res.status(404).json({message: "Car doesn't exist"});
     }
 
-    res.status(400).json({message: "Car doesn't exist"});
+    if(req.currentUser.username !== car.ownerUsername){
+        return res.status(403).json({message: "Unauthorized"});
+    }
+
+    await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
+
+    return res.status(200).json({message: "Car updated."});
 }
 
 module.exports = {

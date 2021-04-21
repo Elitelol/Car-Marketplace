@@ -8,7 +8,7 @@ router.post("/create", auth, addCar);
 router.get("/:username", auth, getUserCars);
 router.get("/:username/:carId", auth, getCar);
 router.get("", auth, getAllCars);
-router.delete("/delete", auth, deleteCar);
-router.patch("/update", auth, updateCar);
+router.delete("/delete/:carId", auth, deleteCar);
+router.patch("/update/:carId", auth, updateCar);
 
 module.exports = router
