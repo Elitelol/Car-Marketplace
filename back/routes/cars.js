@@ -1,9 +1,11 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const test = require('../controllers/cars');
+const {addCar, getUserCars, getCar} = require('../controllers/cars');
 
 const router = express.Router();
 
-router.get("/", auth, test);
+router.post("/:username/create", addCar);
+router.get("/:username", getUserCars);
+router.get("/:username/:carId", getCar)
 
 module.exports = router

@@ -5,13 +5,13 @@ const jwt = require('jsonwebtoken');
 const test = "ab";
 
 const signIn = async (req, res) => {
-    const {email, password } = req.body;
+    const {username, password } = req.body;
 
     try{
-        const user = await User.findOne({email});
+        const user = await User.findOne({username});
 
         if(!user){
-            return res.status(400).json({message: "Email doesn't exist"});
+            return res.status(400).json({message: "Username doesn't exist"});
         }
 
         const passwordCorrect = await bcrypt.compare(password, user.password);
@@ -20,7 +20,7 @@ const signIn = async (req, res) => {
             return res.status(400).json({message: "Invalid password."});
         }
         
-        const token = jwt.sign({email: user.email}, test, { expiresIn: "1h" });
+        const token = jwt.sign({username: user.username}, test, { expiresIn: "1h" });
         res.header('auth-token', token).send(token);
         
     }
@@ -30,22 +30,22 @@ const signIn = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-    const {name, email, password, passwordRepeated} = req.body;
+    const {name, username, password, passwordRepeated} = req.body;
 
     try{
-        const existingUser = await User.findOne({email});
+        const existingUser = await User.findOne({username});
 
         if(existingUser){
-            return res.status(400).json({message: "Email is taken."});
+            return res.status(400).json({message: "Username is taken."});
         }
         if(password !== passwordRepeated){
             return res.status(400).json({message: "Passwords don't match."});
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({name, email, password: hashedPassword});
+        const newUser = await User.create({name, username, password: hashedPassword});
 
-        const token = jwt.sign({email: newUser.email}, test, { expiresIn: "1h" });
+        const token = jwt.sign({username: newUser.username}, test, { expiresIn: "1h" });
         res.header('auth-token', token).send(token);
     }
     catch(error){
