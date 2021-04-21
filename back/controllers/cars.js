@@ -7,7 +7,7 @@ const addCar = async (req, res) => {
 
     try{
         const user = await User.findOne({username});
-        const newCar = await Car.create({make, model, price, picture});
+        const newCar = await Car.create({make, model, price, picture, ownerUsername: username, owner: user._id});
 
         user.cars.push(newCar);
         await user.save();
