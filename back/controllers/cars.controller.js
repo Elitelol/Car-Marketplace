@@ -76,38 +76,49 @@ const getAllCars = async (req, res) => {
 }
 
 const deleteCar = async (req, res) => {
-    const {carId} = req.params
-    const car = await Car.findById(carId);
+    try{
+        const {carId} = req.params
+        const car = await Car.findById(carId);
 
-    if(!car){
-        return res.status(404).json({message: "Car doesn't exist"});
+        if(!car){
+            return res.status(404).json({message: "Car doesn't exist"});
+        }
+
+        if(req.currentUser.username !== car.ownerUsername){
+            return res.status(403).json({message: "Unauthorized"});
+        }
+
+        await Car.findByIdAndDelete(carId);
+
+        return res.status(200).json({message: "Car deleted."});
     }
-
-    if(req.currentUser.username !== car.ownerUsername){
-        return res.status(403).json({message: "Unauthorized"});
+    catch(err){
+        res.status(500).json({message: "Something wrong with server"});
     }
-
-    await Car.findByIdAndDelete(carId);
-
-    return res.status(200).json({message: "Car deleted."});
 }
 
 const updateCar = async (req, res) => {
     const updatedCar = {make, model, price, picture} = req.body;
     const {carId} = req.params
-    const car = await Car.findById(carId);
 
-    if(!car){
-        return res.status(404).json({message: "Car doesn't exist"});
+    try{
+        const car = await Car.findById(carId);
+
+        if(!car){
+            return res.status(404).json({message: "Car doesn't exist"});
+        }
+
+        if(req.currentUser.username !== car.ownerUsername){
+            return res.status(403).json({message: "Unauthorized"});
+        }
+
+        await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
+
+        return res.status(200).json({message: "Car updated."});
     }
-
-    if(req.currentUser.username !== car.ownerUsername){
-        return res.status(403).json({message: "Unauthorized"});
+    catch(error){
+        res.status(500).json({message: "Something wrong with server"});
     }
-
-    await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
-
-    return res.status(200).json({message: "Car updated."});
 }
 
 module.exports = {

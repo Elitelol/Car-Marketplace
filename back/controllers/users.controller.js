@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Car = require("../models/car.model");
 
 const test = "ab";
 
@@ -58,7 +59,46 @@ const signUp = async (req, res) => {
 
 };
 
+const getUser = async (req, res) => {
+    const {username} = req.params;
+
+    const user = await User.find({username}).select('-password').select('-cars');
+
+    if(!user){
+        res.status(404).json({message: "User dosen't exist"});
+    }
+
+    res.status(200).json(user);
+}
+
+const deleteUser = async (req, res) => {
+    const {username} = req.params;
+
+    try{
+        if(username !== req.currentUser.username){
+            return res.status(403).json({message: "Unauthorized"});
+        }
+
+        const user = await User.find({username}).populate("cars");
+        const userCars = user[0]["cars"];
+
+        for(i = 0; i < userCars.length; i++){
+            const id = userCars[i]._id;
+            await Car.findByIdAndDelete(id);
+        }
+
+        await User.findByIdAndDelete(user[0]._id);
+
+        res.status(200).json({message: "Account deleted"});
+    }
+    catch(error){
+        res.status(500).json({message: "Something wrong with server" + " " + error});
+    }
+}
+
 module.exports = {
     signIn,
-    signUp
+    signUp,
+    getUser,
+    deleteUser
 }
