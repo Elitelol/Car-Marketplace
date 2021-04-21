@@ -47,6 +47,7 @@ const getCar = async (req, res) => {
             }
         }
 
+        res.status(400).json("Car doesn't exist");
     }
     catch(err){
         res.status(500).json({message: "Something wrong with server"});
@@ -73,9 +74,50 @@ const getAllCars = async (req, res) => {
     }
 }
 
+const deleteCar = async (req, res) => {
+    const {username} = req.username;
+    const carId = req.body.carId;
+
+    const user = await User.find({username}).populate("cars");
+    const cars = user[0]["cars"];
+
+    for(i = 0; i < cars.length; i++){
+        const car = cars[i];
+
+        if(car._id == carId){
+            await Car.findByIdAndDelete(carId); 
+            return res.status(200).json({message: "Car deleted."});
+        }
+    }
+
+    res.status(400).json({message: "Car doesn't exist"});
+}
+
+const updateCar = async (req, res) => {
+    const {username} = req.username;
+    const {carId, make, model, price, picture} = req.body;
+    const updatedCar = {make, model, price, picture};
+
+    const user = await User.find({username}).populate("cars");
+    const cars = user[0]["cars"];
+
+    for(i = 0; i < cars.length; i++){
+        const car = cars[i];
+
+        if(car._id == carId){
+            await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
+            return res.status(200).json({message: "Car updated."});
+        }
+    }
+
+    res.status(400).json({message: "Car doesn't exist"});
+}
+
 module.exports = {
      addCar,
      getUserCars, 
      getCar,
-     getAllCars
+     getAllCars,
+     deleteCar,
+     updateCar
 };
