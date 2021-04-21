@@ -21,7 +21,7 @@ export default class Login extends Component {
               type="password"
             ></input>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Login
           </button>
         </form>
