@@ -130,7 +130,7 @@ const updateUser = async (req, res) => {
     if (password.length > 0 && password === passwordRepeated) {
       newPassword = await bcrypt.hash(password, 10);
     }
-    else if (password !== passwordRepeated) {
+    else if (password.length > 0 && password !== passwordRepeated) {
       return res.status(400).json({ message: "Passwords dont't match" });
     }
     else {
