@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import API_CONFIG from "./../config/api.config";
 import authService from "./../services/auth.service";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default class Login extends Component {
   constructor(props) {
@@ -30,19 +31,21 @@ export default class Login extends Component {
       })
       .then((res) => {
         authService.setToken(res.data);
-        alert("Signed in successfully");
+        toast.success("Success!");
+        window.location.reload();
       })
       .catch((error) => {
         if (error != null && error.response != null)
-          alert(error.response.data.message);
+          toast.error(error.response.data.message);
         else
-          alert("Something wrong happend!\nPlease contact technical support.");
+          toast.error("Something wrong happend!\nPlease contact technical support.");
       });
   }
 
   render() {
     return (
       <div>
+        <ToastContainer />
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
             <label htmlFor="username">Email</label>
