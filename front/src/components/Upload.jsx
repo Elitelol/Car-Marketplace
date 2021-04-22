@@ -36,9 +36,8 @@ export default class Upload extends Component {
         },
         { headers: { "auth-token": authService.getToken() } }
       )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message != null) alert(data.message);
+      .then((res) => {
+        if (res.data != null) alert(res.data.message);
       })
       .catch((error) => {
         console.log(error);
