@@ -19,14 +19,19 @@ export default class Car extends Component {
             <span className="d-inline-block mb-2 text-success">
               {this.state.data.price}&nbsp;€
             </span>
-            <h3 className="mb-0">{this.state.data.make} {this.state.data.model}</h3>
+            <h3 className="mb-0">
+              {this.state.data.make} {this.state.data.model}
+            </h3>
             <div className="mb-1 text-muted">
               {this.state.data.year
                 ? this.state.data.year.substring(0, 10)
                 : ""}
             </div>
             <p className="card-text mb-auto">{this.state.data.description}</p>
-            <Link to={"/details/"+this.state.data._id} className="stretched-link">
+            <Link
+              to={"/details/" + this.state.data._id}
+              className="stretched-link"
+            >
               Show more
             </Link>
           </div>

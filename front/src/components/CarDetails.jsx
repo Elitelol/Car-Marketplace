@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import Car from "./Car";
-import axios from "axios";
-import API_CONFIG from "./../config/api.config";
-import { ToastContainer, toast } from "react-toastify";
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from 'react-toastify';
+import CarsRepository from "../services/api/cars";
 
 export default class CarDetails extends Component {
   constructor(props) {
@@ -13,51 +10,10 @@ export default class CarDetails extends Component {
       carId: props.match.params.id,
       data: [],
     };
-
-    this.deleteCar = this.deleteCar.bind(this);
-  }
-
-  fetchCar(id) {
-    axios
-      .get(API_CONFIG.URL + "/cars/" + id, { headers: authHeader() })
-      .then((res) => {
-        if (res.data != null) {
-          this.setState({
-            data: res.data,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
-  }
-
-  deleteCar() {
-    axios
-      .delete(API_CONFIG.URL + "/cars/delete/" + this.state.carId, {
-        headers: authHeader(),
-      })
-      .then((res) => {
-        toast.info(res.data.message);
-        window.location.assign("/");
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
   }
 
   componentDidMount() {
-    if (this.state.carId) this.fetchCar(this.state.carId);
+    if(this.state.carId) CarsRepository.fetchCar(this);
   }
 
   render() {
@@ -106,7 +62,7 @@ export default class CarDetails extends Component {
             />
           </div>
         </div>
-        <button className="btn btn-danger" onClick={this.deleteCar}>
+        <button className="btn btn-danger" onClick={() => CarsRepository.deleteCar(this)}>
           Delete
         </button>
       </div>
