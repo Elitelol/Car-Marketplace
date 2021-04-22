@@ -25,6 +25,77 @@ class UsersRepository {
           );
       });
   }
+
+  fetchUser(comp) {
+    axios
+      .get(API_CONFIG.URL + "/users/" + authService.getCurrentUser(), {
+        headers: authHeader(),
+      })
+      .then((res) => res.data[0])
+      .then((data) => {
+        comp.setState({
+          name: data.name,
+          username: data.username,
+          joined: data.joined.substring(0, 10),
+        });
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
+  updateUser(comp) {
+    axios
+      .patch(
+        API_CONFIG.URL + "/users/update/" + comp.state.username,
+        {
+          name: comp.state.name,
+          password: comp.state.password,
+          passwordRepeated: comp.state.passwordRepeated,
+          picture: comp.state.pictureEncoded,
+        },
+        { headers: authHeader() }
+      )
+      .then(() => {
+        toast.success("User information successfully updated!");
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
+  deleteUser() {
+    axios
+      .delete(
+        API_CONFIG.URL + "/users/delete/" + authService.getCurrentUser(),
+        {
+          headers: authHeader(),
+        }
+      )
+      .then((res) => {
+        authService.logout();
+        window.location.assign("/");
+        toast.success(res.data.message);
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
 }
 
 export default new UsersRepository();
