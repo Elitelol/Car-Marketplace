@@ -1,11 +1,61 @@
 import React, { Component } from "react";
+import Car from "./Car";
+import axios from "axios";
+import API_CONFIG from "./../config/api.config";
+import { ToastContainer, toast } from 'react-toastify';
+import authHeader from "./../services/authHeader";
 
 export default class CarDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      carId: props.match.params.id,
+      data: [],
+    };
+  }
+
+  fetchCar(id) {
+    axios.get(
+      API_CONFIG.URL + "/cars/" + id,
+      {headers: authHeader()}
+      )
+      .then((res) => {
+        if (res.data != null) {
+          this.setState({
+            data: res.data,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error("Something wrong happend!\nPlease contact technical support.");
+      });
+  }
+
+  componentDidMount() {
+    if(this.state.carId) this.fetchCar(this.state.carId);
+  }
+
   render() {
     return (
       <div>
-        <h3>Le car</h3>
-        <h4>Le model</h4>
+        <ToastContainer />
+        <div className="row featurette">
+          <div className="col-md-7">
+            <table className="table table-hover table-striped">
+              <tr><td>Make:</td><td>{this.state.data.make}</td></tr>
+              <tr><td>Model:</td><td>{this.state.data.model}</td></tr>
+              <tr><td>Price:</td><td>{this.state.data.price}</td></tr>
+              <tr><td>Description:</td><td>{this.state.data.description}</td></tr>
+            </table>
+          </div>
+          <div className="col-md-5">
+            <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src={this.state.data.picture}/>
+          </div>
+        </div>
       </div>
     );
   }

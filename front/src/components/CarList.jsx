@@ -16,7 +16,7 @@ class CarList extends Component {
     this.fetchCars = this.fetchCars.bind(this);
   }
 
-  fetchCars(event) {
+  fetchCars() {
     axios.get(
       API_CONFIG.URL + "/cars",
       {headers: authHeader()}
@@ -26,8 +26,6 @@ class CarList extends Component {
           this.setState({
             cars: res.data,
           });
-
-          console.log(res.data);
         }
       })
       .catch((error) => {

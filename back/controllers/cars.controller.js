@@ -34,6 +34,23 @@ const getUserCars = async(req, res) => {
 }
 
 const getCar = async (req, res) => {
+    const {carId} = req.params;
+
+    try{
+        const car = await Car.find({_id: carId});
+
+        if(car[0]){
+           return res.status(200).json(car[0]);       
+        }
+
+        res.status(400).json("Car doesn't exist");
+    }
+    catch(err){
+        res.status(500).json({message: "Something wrong with server"});
+    }
+}
+
+const getUserCar = async (req, res) => {
     const {username, carId} = req.params;
 
     try{
@@ -125,6 +142,7 @@ module.exports = {
      addCar,
      getUserCars, 
      getCar,
+     getUserCar,
      getAllCars,
      deleteCar,
      updateCar

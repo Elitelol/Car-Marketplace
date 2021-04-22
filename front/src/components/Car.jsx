@@ -26,13 +26,13 @@ export default class Car extends Component {
                 : ""}
             </div>
             <p className="card-text mb-auto">{this.state.data.description}</p>
-            <Link to="/details" className="stretched-link">
+            <Link to={"/details/"+this.state.data._id} className="stretched-link">
               Show more
             </Link>
           </div>
           <div className="col-auto d-none d-lg-block">
             <img
-              className="bd-placeholder-img"
+              className="bd-placeholder-img img-object-fit-cover"
               width="200"
               height="250"
               src={this.state.data.picture}
