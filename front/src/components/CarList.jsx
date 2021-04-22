@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Car from "./Car";
-import axios from "axios";
-import API_CONFIG from "./../config/api.config";
-import { ToastContainer, toast } from 'react-toastify';
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from "react-toastify";
+import CarsRepository from "../services/api/cars";
 
 class CarList extends Component {
   constructor(props) {
@@ -12,32 +10,10 @@ class CarList extends Component {
     this.state = {
       cars: [],
     };
-
-    this.fetchCars = this.fetchCars.bind(this);
-  }
-
-  fetchCars() {
-    axios.get(
-      API_CONFIG.URL + "/cars",
-      {headers: authHeader()}
-      )
-      .then((res) => {
-        if (res.data != null) {
-          this.setState({
-            cars: res.data,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error("Something wrong happend!\nPlease contact technical support.");
-      });
   }
 
   componentDidMount() {
-    this.fetchCars();
+    CarsRepository.fetchCars(this);
   }
 
   render() {
@@ -45,9 +21,10 @@ class CarList extends Component {
       <React.Fragment>
         <ToastContainer />
         <div className="row mb-2">
-        {this.state.cars.length > 0 && this.state.cars.map((car, i) => {       
-           return (<Car carData={car} key={i} />) 
-        })}
+          {this.state.cars.length > 0 &&
+            this.state.cars.map((car, i) => {
+              return <Car carData={car} key={i} />;
+            })}
         </div>
       </React.Fragment>
     );

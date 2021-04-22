@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import Car from "./Car";
-import axios from "axios";
-import API_CONFIG from "./../config/api.config";
-import { ToastContainer, toast } from 'react-toastify';
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from 'react-toastify';
+import CarsRepository from "../services/api/cars";
 
 export default class CarDetails extends Component {
   constructor(props) {
@@ -15,28 +12,8 @@ export default class CarDetails extends Component {
     };
   }
 
-  fetchCar(id) {
-    axios.get(
-      API_CONFIG.URL + "/cars/" + id,
-      {headers: authHeader()}
-      )
-      .then((res) => {
-        if (res.data != null) {
-          this.setState({
-            data: res.data,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error("Something wrong happend!\nPlease contact technical support.");
-      });
-  }
-
   componentDidMount() {
-    if(this.state.carId) this.fetchCar(this.state.carId);
+    if(this.state.carId) CarsRepository.fetchCar(this);
   }
 
   render() {
