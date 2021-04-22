@@ -48,7 +48,8 @@ export default class CarDetails extends Component {
             <table className="table table-hover table-striped">
               <tr><td>Make:</td><td>{this.state.data.make}</td></tr>
               <tr><td>Model:</td><td>{this.state.data.model}</td></tr>
-              <tr><td>Price:</td><td>{this.state.data.price}</td></tr>
+              <tr><td>Year:</td><td>{this.state.data.year ? this.state.data.year.substring(0, 10) : ""}</td></tr>
+              <tr><td>Price:</td><td><span className="d-inline-block mb-2 text-success">{this.state.data.price}&nbsp;€</span></td></tr>
               <tr><td>Description:</td><td>{this.state.data.description}</td></tr>
             </table>
           </div>
