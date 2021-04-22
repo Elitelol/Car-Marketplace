@@ -7,7 +7,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import CarDetails from "./components/CarDetails";
 
-function App() {
+export default function App() {
   return (
     <React.Fragment>
       <Navbar></Navbar>
@@ -23,5 +23,3 @@ function App() {
     </React.Fragment>
   );
 }
-
-export default App;

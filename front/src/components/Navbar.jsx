@@ -11,6 +11,10 @@ class Navbar extends Component {
     this.logout = this.logout.bind(this);
   }
 
+  isLoggedIn() {
+    return authService.getToken() != null;
+  }
+
   logout() {
     authService.logout();
   }
@@ -27,21 +31,26 @@ class Navbar extends Component {
               </Link>
             </div>
             <div className="col-4 d-flex justify-content-end align-items-center">
-              <a
-                className="btn btn-sm btn-outline-secondary mr-1"
-                href="/register"
-              >
-                Sign up
-              </a>
-              <a className="btn btn-sm btn-outline-primary" href="/login">
-                Sign in
-              </a>
-              <button
-                className="btn btn-sm btn-outline-primary"
-                onClick={this.logout}
-              >
-                Logout
-              </button>
+              {this.isLoggedIn() ? (
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={this.logout}
+                >
+                  Logout
+                </button>
+              ) : (
+                <React.Fragment>
+                  <a
+                    className="btn btn-sm btn-outline-secondary mr-1"
+                    href="/register"
+                  >
+                    Sign up
+                  </a>
+                  <a className="btn btn-sm btn-outline-primary" href="/login">
+                    Sign in
+                  </a>
+                </React.Fragment>
+              )}
             </div>
           </div>
         </header>

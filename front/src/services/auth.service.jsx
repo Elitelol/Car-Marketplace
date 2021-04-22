@@ -8,7 +8,6 @@ class AuthService {
   }
 
   logout() {
-    console.log("logout");
     localStorage.removeItem("auth-token");
   }
 

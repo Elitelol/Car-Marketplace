@@ -40,7 +40,6 @@ export default class Upload extends Component {
         if (res.data != null) alert(res.data.message);
       })
       .catch((error) => {
-        console.log(error);
         if (error != null && error.response != null)
           alert(error.response.data.message);
         else
