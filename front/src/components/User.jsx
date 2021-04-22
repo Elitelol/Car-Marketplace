@@ -22,7 +22,10 @@ export default class User extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleUserUpdate = this.handleUserUpdate.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+  }
 
+  componentDidMount() {
     this.getUserInfo();
   }
 
@@ -81,6 +84,31 @@ export default class User extends Component {
       )
       .then(() => {
         toast.success("User information successfully updated!");
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
+  deleteUser() {
+    // TODO: add some sort of confirmation
+
+    axios
+      .delete(
+        API_CONFIG.URL + "/users/delete/" + authService.getCurrentUser(),
+        {
+          headers: authHeader(),
+        }
+      )
+      .then((res) => {
+        authService.logout();
+        window.location.assign("/");
+        toast.success(res.data.message);
       })
       .catch((error) => {
         if (error != null && error.response != null)
@@ -160,6 +188,9 @@ export default class User extends Component {
             Update
           </button>
         </form>
+        <button className="btn btn-danger" onClick={this.deleteUser}>
+          Delete account
+        </button>
       </React.Fragment>
     );
   }

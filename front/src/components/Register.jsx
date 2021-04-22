@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import API_CONFIG from "./../config/api.config";
 
 export default class Register extends Component {
@@ -41,7 +41,9 @@ export default class Register extends Component {
         if (error != null && error.response != null)
           toast.error(error.response.data.message);
         else
-          toast.error("Something wrong happend!\nPlease contact technical support.");
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
       });
   }
 
@@ -55,7 +57,7 @@ export default class Register extends Component {
             <input
               className="form-control"
               name="username"
-              type="email"
+              type="text"
               value={this.state.username}
               onChange={this.handleInputChange}
               required
