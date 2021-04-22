@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { Component } from "react";
+import axios from "axios";
 import API_CONFIG from "./../config/api.config";
 
 export default class Register extends Component {
@@ -31,7 +31,7 @@ export default class Register extends Component {
         password: this.state.password,
         passwordRepeated: this.state.repeatedPassword,
       })
-      .then((res) => {
+      .then(() => {
         alert(
           "User registered successfully!\nYou can now sign in to this platform."
         );
@@ -56,7 +56,7 @@ export default class Register extends Component {
               type="email"
               value={this.state.username}
               onChange={this.handleInputChange}
-              required={true}
+              required
             ></input>
           </div>
           <div className="form-group">
@@ -67,7 +67,7 @@ export default class Register extends Component {
               type="text"
               value={this.state.name}
               onChange={this.handleInputChange}
-              required={true}
+              required
             ></input>
           </div>
           <div className="form-group">
@@ -78,7 +78,7 @@ export default class Register extends Component {
               type="password"
               value={this.state.password}
               onChange={this.handleInputChange}
-              required={true}
+              required
             ></input>
           </div>
           <div className="form-group">
@@ -89,7 +89,7 @@ export default class Register extends Component {
               type="password"
               value={this.state.repeatedPassword}
               onChange={this.handleInputChange}
-              required={true}
+              required
             ></input>
           </div>
           <button type="submit" className="btn btn-primary">
