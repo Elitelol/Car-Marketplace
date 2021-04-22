@@ -1,12 +1,13 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import authService from "./services/auth.service";
 import Navbar from "./components/Navbar";
 import CarList from "./components/CarList";
 import Upload from "./components/Upload";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import CarDetails from "./components/CarDetails";
-import authService from "./services/auth.service";
+import User from "./components/User";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           </Route>
           <Route path="/upload" component={Upload}></Route>
           <Route path="/details" component={CarDetails}></Route>
+          <Route path="/user" component={User}></Route>
         </Switch>
       </main>
     </React.Fragment>

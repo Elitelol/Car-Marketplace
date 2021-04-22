@@ -29,15 +29,26 @@ class Navbar extends Component {
             </div>
             <div className="col-4 d-flex justify-content-end align-items-center">
               {authService.isLoggedIn() ? (
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  onClick={this.logout}
-                >
-                  Logout
-                </button>
+                <React.Fragment>
+                  <Link
+                    className="btn btn-sm btn-outline-secondary mr-1"
+                    to="/user"
+                  >
+                    {authService.getCurrentUser()}
+                  </Link>
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={this.logout}
+                  >
+                    Logout
+                  </button>
+                </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Link className="btn btn-sm btn-outline-secondary mr-1" to="/register">
+                  <Link
+                    className="btn btn-sm btn-outline-secondary mr-1"
+                    to="/register"
+                  >
                     Sign up
                   </Link>
                   <Link className="btn btn-sm btn-outline-primary" to="/login">
@@ -52,7 +63,7 @@ class Navbar extends Component {
         <div className="nav-scroller py-1 mb-2">
           <nav className="nav d-flex justify-content-between">
             <Link to="/upload" className="p-2 link-secondary">
-                Upload
+              Upload
             </Link>
           </nav>
         </div>
