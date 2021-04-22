@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import API_CONFIG from "./../config/api.config";
+import { ToastContainer } from "react-toastify";
+import UsersRepository from "./../services/api/users";
 
 export default class Register extends Component {
   constructor(props) {
@@ -24,27 +23,7 @@ export default class Register extends Component {
 
   handleRegister(event) {
     event.preventDefault();
-
-    axios
-      .post(API_CONFIG.URL + "/users/signUp", {
-        name: this.state.name,
-        username: this.state.username,
-        password: this.state.password,
-        passwordRepeated: this.state.repeatedPassword,
-      })
-      .then(() => {
-        toast.success(
-          "User registered successfully!\nYou can now sign in to this platform."
-        );
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    UsersRepository.register(this);
   }
 
   render() {

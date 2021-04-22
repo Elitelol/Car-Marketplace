@@ -5,6 +5,29 @@ import authHeader from "../authHeader";
 import authService from "../auth.service";
 
 class UsersRepository {
+  register(comp) {
+    axios
+      .post(API_CONFIG.URL + "/users/signUp", {
+        name: comp.state.name,
+        username: comp.state.username,
+        password: comp.state.password,
+        passwordRepeated: comp.state.repeatedPassword,
+      })
+      .then(() => {
+        toast.success(
+          "User registered successfully!\nYou can now sign in to this platform."
+        );
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
   login(comp) {
     axios
       .post(API_CONFIG.URL + "/users/signIn", {
