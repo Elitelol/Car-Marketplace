@@ -11,7 +11,6 @@ export default class Register extends Component {
       username: "",
       password: "",
       repeatedPassword: "",
-      serverMessage: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,8 +23,7 @@ export default class Register extends Component {
 
   handleRegister(event) {
     event.preventDefault();
-    console.log(this.state);
-    console.log("called register function");
+
     axios
       .post(this.API_URL + "/users/signUp", {
         name: this.state.name,
@@ -35,8 +33,10 @@ export default class Register extends Component {
       })
       .then((res) => res.json())
       .then((data) => {
-        console.log("response data: ", data);
-        this.setState({ serverMessage: data.message });
+        alert(data.message);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
       });
   }
 
@@ -92,7 +92,6 @@ export default class Register extends Component {
             Register
           </button>
         </form>
-        {this.state.serverMessage}
       </div>
     );
   }
