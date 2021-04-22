@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import API_CONFIG from "./../config/api.config";
+import authService from "./../services/auth.service";
 
 export default class Login extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ export default class Login extends Component {
         password: this.state.password,
       })
       .then((res) => {
-        // TODO: sign in
-        alert("Signed in");
+        authService.setToken(res.data);
+        alert("Signed in successfully");
       })
       .catch((error) => {
         if (error != null && error.response != null)
@@ -44,7 +45,7 @@ export default class Login extends Component {
       <div>
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
-            <label for="username">Email</label>
+            <label htmlFor="username">Email</label>
             <input
               className="form-control"
               name="username"
@@ -55,7 +56,7 @@ export default class Login extends Component {
             ></input>
           </div>
           <div className="form-group">
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               className="form-control"
               name="password"
