@@ -2,8 +2,19 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./../styles/main.scss";
 import logo from "./../logo.svg";
+import authService from "./../services/auth.service";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    authService.logout();
+  }
+
   render() {
     return (
       <div className="container">
@@ -25,6 +36,12 @@ class Navbar extends Component {
               <a className="btn btn-sm btn-outline-primary" href="/login">
                 Sign in
               </a>
+              <button
+                className="btn btn-sm btn-outline-primary"
+                onClick={this.logout}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </header>

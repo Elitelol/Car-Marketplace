@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import API_CONFIG from "./../config/api.config";
-import authService from "./../services/auth.service";
+import authHeader from "./../services/authHeader";
 
 export default class Upload extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export default class Upload extends Component {
           price: this.state.price,
           picture: null, // convert image to base64?
         },
-        { headers: { "auth-token": authService.getToken() } }
+        { headers: authHeader() }
       )
       .then((res) => {
         if (res.data != null) alert(res.data.message);
