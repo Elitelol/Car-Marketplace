@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import API_CONFIG from "./../config/api.config";
-import authService from "./../services/auth.service";
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from "react-toastify";
 import UsersRepository from "./../services/api/users";
 
 export default class User extends Component {
