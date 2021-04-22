@@ -26,13 +26,34 @@ class CarsRepository {
 
   fetchCar(comp) {
     axios
-      .get(API_CONFIG.URL + "/cars/" + comp.state.carId, { headers: authHeader() })
+      .get(API_CONFIG.URL + "/cars/" + comp.state.carId, {
+        headers: authHeader(),
+      })
       .then((res) => {
         if (res.data != null) {
           comp.setState({
             data: res.data,
           });
         }
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
+  deleteCar(comp) {
+    axios
+      .delete(API_CONFIG.URL + "/cars/delete/" + comp.state.carId, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        toast.info(res.data.message);
+        window.location.assign("/");
       })
       .catch((error) => {
         if (error != null && error.response != null)
