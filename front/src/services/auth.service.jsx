@@ -3,6 +3,14 @@ import axios from "axios";
 const API_URL = "http://localhost:5000/api/auth";
 
 class AuthService {
+  getToken() {
+    return localStorage.getItem("auth-token");
+  }
+  
+  setToken(token) {
+    localStorage.setItem("auth-token", token);
+  }
+
   login(username, password) {
     return axios
       .post(API_URL + "signin", {

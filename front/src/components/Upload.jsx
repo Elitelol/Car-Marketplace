@@ -1,37 +1,100 @@
 import React, { Component } from "react";
+import axios from "axios";
+import API_CONFIG from "./../config/api.config";
+import authService from "./../services/auth.service";
 
 export default class Upload extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      make: "",
+      model: "",
+      price: 0,
+      picture: null,
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
+  }
+
+  handleInputChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleUpload(event) {
+    event.preventDefault();
+
+    axios
+      .post(
+        API_CONFIG.URL + "/cars/create",
+        {
+          make: this.state.make,
+          model: this.state.model,
+          price: this.state.price,
+          picture: null, // convert image to base64?
+        },
+        { headers: { "auth-token": authService.getToken() } }
+      )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message != null) alert(data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error != null && error.response != null)
+          alert(error.response.data.message);
+        else
+          alert("Something wrong happend!\nPlease contact technical support.");
+      });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <form className="form">
+        <form className="form" onSubmit={this.handleUpload}>
           <div className="form-group">
-            <label for="upload-car-manufacturer">Manufacturer</label>
+            <label htmlFor="make">Manufacturer</label>
             <input
               className="form-control"
-              id="upload-car-manufacturer"
+              name="make"
               type="text"
+              value={this.state.make}
+              onChange={this.handleInputChange}
+              required
             ></input>
           </div>
           <div className="form-group">
-            <label for="upload-car-model">Model</label>
+            <label htmlFor="model">Model</label>
             <input
               className="form-control"
-              id="upload-car-model"
+              name="model"
               type="text"
+              value={this.state.model}
+              onChange={this.handleInputChange}
+              required
             ></input>
           </div>
           <div className="form-group">
-            <label for="upload-car-year">Year</label>
+            <label htmlFor="price">Price</label>
             <input
               className="form-control"
-              id="upload-car-year"
-              type="text"
+              name="price"
+              type="number"
+              value={this.state.price}
+              onChange={this.handleInputChange}
+              required
             ></input>
           </div>
           <div className="form-group">
-            <label for="upload-car-image">Image</label>
-            <input className="d-flex" id="upload-car-image" type="file"></input>
+            <label htmlFor="picture">Image</label>
+            <input
+              className="d-flex"
+              name="picture"
+              type="file"
+              value={this.state.picture}
+              onChange={this.handleInputChange}
+            ></input>
           </div>
           <button type="submit" className="btn btn-primary">
             Upload
