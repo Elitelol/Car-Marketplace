@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import API_CONFIG from "./../config/api.config";
 import authHeader from "./../services/authHeader";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 export default class Upload extends Component {
   constructor(props) {
@@ -11,7 +11,9 @@ export default class Upload extends Component {
     this.state = {
       make: "",
       model: "",
+      year: 2000,
       price: 0,
+      description: "",
       picture: "",
       pictureEncoded: "",
     };
@@ -32,7 +34,7 @@ export default class Upload extends Component {
     reader.onloadend = () => {
       this.setState({
         picture: file,
-        pictureEncoded: reader.result
+        pictureEncoded: reader.result,
       });
     };
   }
@@ -40,15 +42,18 @@ export default class Upload extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post(
-      API_CONFIG.URL + "/cars/create",
-      {
-        make: this.state.make,
-        model: this.state.model,
-        price: this.state.price,
-        picture: this.state.pictureEncoded,
-      },
-      {headers: authHeader()}
+    axios
+      .post(
+        API_CONFIG.URL + "/cars/create",
+        {
+          make: this.state.make,
+          model: this.state.model,
+          year: this.state.year,
+          price: this.state.price,
+          description: this.state.description,
+          picture: this.state.pictureEncoded,
+        },
+        { headers: authHeader() }
       )
       .then((res) => {
         if (res.data != null) toast.info(res.data.message);
@@ -57,7 +62,9 @@ export default class Upload extends Component {
         if (error != null && error.response != null)
           toast.error(error.response.data.message);
         else
-          toast.error("Something wrong happend!\nPlease contact technical support.");
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
       });
   }
 
@@ -89,6 +96,17 @@ export default class Upload extends Component {
             ></input>
           </div>
           <div className="form-group">
+            <label htmlFor="year">Manufacture date</label>
+            <input
+              className="form-control"
+              name="year"
+              type="date"
+              value={this.state.year}
+              onChange={this.handleInputChange}
+              views={["year"]}
+            ></input>
+          </div>
+          <div className="form-group">
             <label htmlFor="price">Price</label>
             <input
               className="form-control"
@@ -97,6 +115,16 @@ export default class Upload extends Component {
               value={this.state.price}
               onChange={this.handleInputChange}
               required
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              className="form-control"
+              name="description"
+              type="text"
+              value={this.state.description}
+              onChange={this.handleInputChange}
             ></input>
           </div>
           <div className="form-group">
