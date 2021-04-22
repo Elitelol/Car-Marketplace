@@ -13,7 +13,7 @@ export default class User extends Component {
       name: "",
       username: "",
       password: "",
-      repeatedPassword: "",
+      passwordRepeated: "",
       joined: "",
       picture: "",
       pictureEncoded: "",
@@ -77,7 +77,7 @@ export default class User extends Component {
         {
           name: this.state.name,
           password: this.state.password,
-          repeatedPassword: this.state.repeatedPassword,
+          passwordRepeated: this.state.passwordRepeated,
           picture: this.state.pictureEncoded,
         },
         { headers: authHeader() }
@@ -169,9 +169,9 @@ export default class User extends Component {
             <label htmlFor="repeated-password">Confirm password</label>
             <input
               className="form-control"
-              name="repeatedPassword"
+              name="passwordRepeated"
               type="password"
-              value={this.state.repeatedPassword}
+              value={this.state.passwordRepeated}
               onChange={this.handleInputChange}
             ></input>
           </div>
