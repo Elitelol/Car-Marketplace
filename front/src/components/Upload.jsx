@@ -12,30 +12,45 @@ export default class Upload extends Component {
       make: "",
       model: "",
       price: 0,
-      picture: null,
+      picture: "",
+      pictureEncoded: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleUpload(event) {
+  handleFileChange(event) {
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.setState({
+        picture: file,
+        pictureEncoded: reader.result
+      });
+    };
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
 
-    axios
-      .post(
-        API_CONFIG.URL + "/cars/create",
-        {
-          make: this.state.make,
-          model: this.state.model,
-          price: this.state.price,
-          picture: null, // convert image to base64?
-        },
-        { headers: authHeader() }
+    console.log(this.state);
+
+    axios.post(
+      API_CONFIG.URL + "/cars/create",
+      {
+        make: this.state.make,
+        model: this.state.model,
+        price: this.state.price,
+        picture: this.state.pictureEncoded,
+      },
+      {headers: authHeader()}
       )
       .then((res) => {
         if (res.data != null) toast.info(res.data.message);
@@ -52,7 +67,7 @@ export default class Upload extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <form className="form" onSubmit={this.handleUpload}>
+        <form className="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="make">Manufacturer</label>
             <input
@@ -92,8 +107,7 @@ export default class Upload extends Component {
               className="d-flex"
               name="picture"
               type="file"
-              value={this.state.picture}
-              onChange={this.handleInputChange}
+              onChange={this.handleFileChange}
             ></input>
           </div>
           <button type="submit" className="btn btn-primary">
