@@ -7,7 +7,7 @@ class AuthService {
     localStorage.setItem("auth-token", token);
   }
 
-  logout() {
+  logout(navbar) {
     localStorage.removeItem("auth-token");
   }
 

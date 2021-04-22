@@ -40,15 +40,12 @@ class Navbar extends Component {
                 </button>
               ) : (
                 <React.Fragment>
-                  <a
-                    className="btn btn-sm btn-outline-secondary mr-1"
-                    href="/register"
-                  >
+                  <Link className="btn btn-sm btn-outline-secondary mr-1" to="/register">
                     Sign up
-                  </a>
-                  <a className="btn btn-sm btn-outline-primary" href="/login">
+                  </Link>
+                  <Link className="btn btn-sm btn-outline-primary" to="/login">
                     Sign in
-                  </a>
+                  </Link>
                 </React.Fragment>
               )}
             </div>
@@ -57,32 +54,9 @@ class Navbar extends Component {
 
         <div className="nav-scroller py-1 mb-2">
           <nav className="nav d-flex justify-content-between">
-            <Link to="/upload">
-              <button className="btn btn-primary" href="/upload">
+            <Link to="/upload" className="p-2 link-secondary">
                 Upload
-              </button>
             </Link>
-            {/* <a className="p-2 link-secondary" href="#">
-              About
-            </a> */}
-            {/* <a className="p-2 link-secondary" href="#">
-              Links
-            </a>
-            <a className="p-2 link-secondary" href="#">
-              Which
-            </a>
-            <a className="p-2 link-secondary" href="#">
-              Won't
-            </a>
-            <a className="p-2 link-secondary" href="#">
-              Be
-            </a>
-            <a className="p-2 link-secondary" href="#">
-              Used
-            </a>
-            <a className="p-2 link-secondary" href="#">
-              Politics
-            </a> */}
           </nav>
         </div>
       </div>
