@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
+import API_CONFIG from "./../config/api.config";
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
-    this.API_URL = "http://localhost:3000";
 
     this.state = {
       name: "",
@@ -25,18 +25,22 @@ export default class Register extends Component {
     event.preventDefault();
 
     axios
-      .post(this.API_URL + "/users/signUp", {
+      .post(API_CONFIG.URL + "/users/signUp", {
         name: this.state.name,
         username: this.state.username,
         password: this.state.password,
         passwordRepeated: this.state.repeatedPassword,
       })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.message);
+      .then((res) => {
+        alert(
+          "User registered successfully!\nYou can now sign in to this platform."
+        );
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        if (error != null && error.response != null)
+          alert(error.response.data.message);
+        else
+          alert("Something wrong happend!\nPlease contact technical support.");
       });
   }
 
