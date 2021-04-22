@@ -140,7 +140,7 @@ const updateUser = async (req, res) => {
     if (!name) name = user.name;
     if (!picture) picture = user.picture;
 
-    const updated = { name, newPassword, picture };
+    const updated = { name, password: newPassword, picture };
 
     await User.findOneAndUpdate(username, updated);
 

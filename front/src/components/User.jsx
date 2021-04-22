@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import API_CONFIG from "./../config/api.config";
-import authService from "./../services/auth.service";
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from "react-toastify";
+import UsersRepository from "./../services/api/users";
 
 export default class User extends Component {
   constructor(props) {
@@ -26,30 +23,7 @@ export default class User extends Component {
   }
 
   componentDidMount() {
-    this.getUserInfo();
-  }
-
-  getUserInfo() {
-    axios
-      .get(API_CONFIG.URL + "/users/" + authService.getCurrentUser(), {
-        headers: authHeader(),
-      })
-      .then((res) => res.data[0])
-      .then((data) => {
-        this.setState({
-          name: data.name,
-          username: data.username,
-          joined: data.joined.substring(0, 10),
-        });
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    UsersRepository.fetchUser(this);
   }
 
   handleInputChange(event) {
@@ -70,54 +44,12 @@ export default class User extends Component {
 
   handleUserUpdate(event) {
     event.preventDefault();
-
-    axios
-      .patch(
-        API_CONFIG.URL + "/users/update/" + this.state.username,
-        {
-          name: this.state.name,
-          password: this.state.password,
-          passwordRepeated: this.state.passwordRepeated,
-          picture: this.state.pictureEncoded,
-        },
-        { headers: authHeader() }
-      )
-      .then(() => {
-        toast.success("User information successfully updated!");
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    UsersRepository.updateUser(this);
   }
 
   deleteUser() {
     // TODO: add some sort of confirmation
-
-    axios
-      .delete(
-        API_CONFIG.URL + "/users/delete/" + authService.getCurrentUser(),
-        {
-          headers: authHeader(),
-        }
-      )
-      .then((res) => {
-        authService.logout();
-        window.location.assign("/");
-        toast.success(res.data.message);
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    UsersRepository.deleteUser();
   }
 
   render() {
