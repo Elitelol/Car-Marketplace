@@ -4,6 +4,8 @@ const carSchema = mongoose.Schema({
     make: {type: String, required: true},
     model: {type: String, required: true},
     price: {type: Number, required: true},
+    year: Date,
+    description: String,
     picture: String,
     posted: {
         type: Date,

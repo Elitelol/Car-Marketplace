@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/:username', auth, getUser);
+router.get('/:username', getUser);
 router.delete('/delete/:username', auth, deleteUser);
 router.post('/signIn', signIn);
 router.post('/signUp', signUp);

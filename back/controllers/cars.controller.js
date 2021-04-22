@@ -4,11 +4,11 @@ const { mongoose } = require("mongoose");
 
 const addCar = async (req, res) => {
     const username = req.currentUser.username;
-    const {make, model, price, picture} = req.body;
+    const {make, model, price, year, description, picture} = req.body;
 
     try{
         const user = await User.findOne({username});
-        const newCar = await Car.create({make, model, price, picture, ownerUsername: username, owner: user._id});
+        const newCar = await Car.create({make, model, price, year, description, picture, ownerUsername: username, owner: user._id});
         user.cars.push(newCar);
         await user.save();
 
@@ -98,7 +98,7 @@ const deleteCar = async (req, res) => {
 }
 
 const updateCar = async (req, res) => {
-    const updatedCar = {make, model, price, picture} = req.body;
+    const updatedCar = {make, model, price, year, description, picture} = req.body;
     const {carId} = req.params
 
     try{
