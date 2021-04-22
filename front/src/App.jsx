@@ -22,9 +22,13 @@ export default function App() {
           <Route path="/login" component={Login}>
             {authService.isLoggedIn() && <Redirect to="/" />}
           </Route>
-          <Route path="/upload" component={Upload}></Route>
-          <Route path="/details" component={CarDetails}></Route>
-          <Route path="/user" component={User}></Route>
+          <Route path="/upload" component={Upload}>
+            {!authService.isLoggedIn() && <Redirect to="/" />}
+          </Route>
+          <Route path="/details/:id" component={CarDetails}></Route>
+          <Route path="/user" component={User}>
+            {!authService.isLoggedIn() && <Redirect to="/" />}
+          </Route>
         </Switch>
       </main>
     </React.Fragment>

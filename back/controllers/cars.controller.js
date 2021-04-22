@@ -7,6 +7,10 @@ const addCar = async (req, res) => {
     const {make, model, price, year, description, picture} = req.body;
 
     try{
+        if(!make || !model || !price ){
+            res.status(400).json({message: "Required car fields missing"});
+        }
+
         const user = await User.findOne({username});
         const newCar = await Car.create({make, model, price, year, description, picture, ownerUsername: username, owner: user._id});
         user.cars.push(newCar);
@@ -34,6 +38,23 @@ const getUserCars = async(req, res) => {
 }
 
 const getCar = async (req, res) => {
+    const {carId} = req.params;
+
+    try{
+        const car = await Car.find({_id: carId});
+
+        if(car[0]){
+           return res.status(200).json(car[0]);       
+        }
+
+        res.status(400).json("Car doesn't exist");
+    }
+    catch(err){
+        res.status(500).json({message: "Something wrong with server"});
+    }
+}
+
+const getUserCar = async (req, res) => {
     const {username, carId} = req.params;
 
     try{
@@ -98,7 +119,7 @@ const deleteCar = async (req, res) => {
 }
 
 const updateCar = async (req, res) => {
-    const updatedCar = {make, model, price, year, description, picture} = req.body;
+    const {make, model, price, year, description, picture} = req.body;
     const {carId} = req.params
 
     try{
@@ -111,6 +132,15 @@ const updateCar = async (req, res) => {
         if(req.currentUser.username !== car.ownerUsername){
             return res.status(403).json({message: "Unauthorized"});
         }
+
+        if(!make) make = car.make;
+        if(!model) model = car.model;
+        if(!price) price = car.price;
+        if(!year) year = car.year;
+        if(!description) description = car.description;
+        if(!picture) picture = car.picture;
+
+        const updatedCar = {make, model, price, year, description, picture};
 
         await Car.findByIdAndUpdate(carId, updatedCar, {new: true}); 
 
@@ -125,6 +155,7 @@ module.exports = {
      addCar,
      getUserCars, 
      getCar,
+     getUserCar,
      getAllCars,
      deleteCar,
      updateCar
