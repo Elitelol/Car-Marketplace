@@ -115,13 +115,27 @@ const getUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const updated = {name, password, picture} = req.body;
+  const toUpdate = {name, password, repeatedPassword, picture} = req.body;
   const {username} = req.params;
 
   try{
+    const newPassword;
+
     if(req.currentUser.username != username){
       return res.status(403).json({message: "Unauthorized"});
     }
+
+    if(password.length > 0 && password === passwordRepeated){
+      newPassword = await bcrypt.hash(password, 10);
+    }
+    else if(password !== passwordRepeated){
+      return res.status(400).json({message: "Passwords dont't match"});
+    }
+    else{
+      newPassword = await User.find({username: req.currentUser.username}).password;
+    }
+
+    const updated = {name, newPassword, picture};
 
     await User.findOneAndUpdate(username, updated);
 
