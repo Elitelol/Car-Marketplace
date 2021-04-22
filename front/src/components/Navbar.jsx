@@ -13,7 +13,7 @@ class Navbar extends Component {
 
   logout() {
     authService.logout();
-    window.location.reload();
+    window.location.assign("/");
   }
 
   render() {
