@@ -104,9 +104,39 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try{
+    const users = await User.find().select("-cars").select("-password");
+    res.send(200).json(users);
+  }
+  catch(error){
+    res.status(500).json({message: "Something wrong with server " + error});
+  }
+}
+
+const updateUser = async (req, res) => {
+  const updated = {name, password, picture} = req.body;
+  const {username} = req.params;
+
+  try{
+    if(req.currentUser.username != username){
+      return res.status(403).json({message: "Unauthorized"});
+    }
+
+    await User.findOneAndUpdate(username, updated);
+
+    res.status(200).json({message: "Profile updated"});
+  }
+  catch(error){
+    res.status(500).json({message: "Something wrong with server " + error});
+  }
+}
+
 module.exports = {
   signIn,
   signUp,
   getUser,
   deleteUser,
+  getUsers,
+  updateUser
 };
