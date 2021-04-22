@@ -4,7 +4,7 @@ import React, { Component } from "react";
 export default class Register extends Component {
   constructor(props) {
     super(props);
-    this.API_URL = "http://localhost:5000";
+    this.API_URL = "http://localhost:3000";
 
     this.state = {
       name: "",
