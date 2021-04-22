@@ -12,11 +12,22 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    const tokenInfo = this.parseJWTToken();
+    if (tokenInfo != null) return tokenInfo.username;
+    return null;
   }
 
   isLoggedIn() {
     return this.getToken() != null;
+  }
+
+  parseJWTToken() {
+    const token = this.getToken();
+    if (!token) return;
+
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
   }
 }
 

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import API_CONFIG from "./../config/api.config";
 import authHeader from "./../services/authHeader";
-import { ToastContainer, toast } from "react-toastify";
 
 export default class Upload extends Component {
   constructor(props) {
