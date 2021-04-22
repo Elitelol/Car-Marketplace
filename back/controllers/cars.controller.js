@@ -119,7 +119,7 @@ const deleteCar = async (req, res) => {
 }
 
 const updateCar = async (req, res) => {
-    const {make, model, price, year, description, picture} = req.body;
+    let {make, model, price, year, description, picture} = req.body;
     const {carId} = req.params
 
     try{
