@@ -1,11 +1,12 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import CarList from "./components/CarList";
 import Upload from "./components/Upload";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import CarDetails from "./components/CarDetails";
+import authService from "./services/auth.service";
 
 export default function App() {
   return (
@@ -14,8 +15,12 @@ export default function App() {
       <main className="container">
         <Switch>
           <Route exact path="/" component={CarList}></Route>
-          <Route path="/register" component={Register}></Route>
-          <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}>
+            {authService.isLoggedIn() && <Redirect to="/" />}
+          </Route>
+          <Route path="/login" component={Login}>
+            {authService.isLoggedIn() && <Redirect to="/" />}
+          </Route>
           <Route path="/upload" component={Upload}></Route>
           <Route path="/details" component={CarDetails}></Route>
         </Switch>

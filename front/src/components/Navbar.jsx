@@ -11,12 +11,9 @@ class Navbar extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  isLoggedIn() {
-    return authService.getToken() != null;
-  }
-
   logout() {
     authService.logout();
+    window.location.reload();
   }
 
   render() {
@@ -31,7 +28,7 @@ class Navbar extends Component {
               </Link>
             </div>
             <div className="col-4 d-flex justify-content-end align-items-center">
-              {this.isLoggedIn() ? (
+              {authService.isLoggedIn() ? (
                 <button
                   className="btn btn-sm btn-outline-primary"
                   onClick={this.logout}

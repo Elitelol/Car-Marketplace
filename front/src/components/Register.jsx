@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 import API_CONFIG from "./../config/api.config";
 
 export default class Register extends Component {
@@ -32,21 +33,22 @@ export default class Register extends Component {
         passwordRepeated: this.state.repeatedPassword,
       })
       .then(() => {
-        alert(
+        toast.success(
           "User registered successfully!\nYou can now sign in to this platform."
         );
       })
       .catch((error) => {
         if (error != null && error.response != null)
-          alert(error.response.data.message);
+          toast.error(error.response.data.message);
         else
-          alert("Something wrong happend!\nPlease contact technical support.");
+          toast.error("Something wrong happend!\nPlease contact technical support.");
       });
   }
 
   render() {
     return (
       <div>
+        <ToastContainer />
         <form onSubmit={this.handleRegister}>
           <div className="form-group">
             <label htmlFor="username">Username</label>

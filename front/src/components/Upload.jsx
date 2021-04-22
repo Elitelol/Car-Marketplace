@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import API_CONFIG from "./../config/api.config";
 import authHeader from "./../services/authHeader";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default class Upload extends Component {
   constructor(props) {
@@ -37,19 +38,20 @@ export default class Upload extends Component {
         { headers: authHeader() }
       )
       .then((res) => {
-        if (res.data != null) alert(res.data.message);
+        if (res.data != null) toast.info(res.data.message);
       })
       .catch((error) => {
         if (error != null && error.response != null)
-          alert(error.response.data.message);
+          toast.error(error.response.data.message);
         else
-          alert("Something wrong happend!\nPlease contact technical support.");
+          toast.error("Something wrong happend!\nPlease contact technical support.");
       });
   }
 
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <form className="form" onSubmit={this.handleUpload}>
           <div className="form-group">
             <label htmlFor="make">Manufacturer</label>
