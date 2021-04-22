@@ -5,50 +5,94 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.API_URL = "http://localhost:5000";
-    this.register = this.register.bind(this);
+
+    this.state = {
+      name: "",
+      username: "",
+      password: "",
+      repeatedPassword: "",
+      serverMessage: "",
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
-  register(event) {
+  handleInputChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleRegister(event) {
     event.preventDefault();
+    console.log(this.state);
     console.log("called register function");
     axios
-      .post(this.API_URL + "/users/signUp")
+      .post(this.API_URL + "/users/signUp", {
+        name: this.state.name,
+        username: this.state.username,
+        password: this.state.password,
+        passwordRepeated: this.state.repeatedPassword,
+      })
       .then((res) => res.json())
-      .then((data) => console.log("Request data: ", data));
+      .then((data) => {
+        console.log("response data: ", data);
+        this.setState({ serverMessage: data.message });
+      });
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.register}>
+        <form onSubmit={this.handleRegister}>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">Username</label>
             <input
               className="form-control"
-              id="registration-email"
+              name="username"
               type="email"
+              value={this.state.username}
+              onChange={this.handleInputChange}
+              required={true}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              className="form-control"
+              name="name"
+              type="text"
+              value={this.state.name}
+              onChange={this.handleInputChange}
+              required={true}
             ></input>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
               className="form-control"
-              id="registration-password"
+              name="password"
               type="password"
+              value={this.state.password}
+              onChange={this.handleInputChange}
+              required={true}
             ></input>
           </div>
           <div className="form-group">
             <label htmlFor="repeated-password">Confirm password</label>
             <input
               className="form-control"
-              id="repeated-password"
+              name="repeatedPassword"
               type="password"
+              value={this.state.repeatedPassword}
+              onChange={this.handleInputChange}
+              required={true}
             ></input>
           </div>
           <button type="submit" className="btn btn-primary">
             Register
           </button>
         </form>
+        {this.state.serverMessage}
       </div>
     );
   }
