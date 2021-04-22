@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
-import API_CONFIG from "./../config/api.config";
-import authService from "./../services/auth.service";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import UsersRepository from "../services/api/users";
 
 export default class Login extends Component {
   constructor(props) {
@@ -24,24 +22,7 @@ export default class Login extends Component {
   handleLogin(event) {
     event.preventDefault();
 
-    axios
-      .post(API_CONFIG.URL + "/users/signIn", {
-        username: this.state.username,
-        password: this.state.password,
-      })
-      .then((res) => {
-        authService.setToken(res.data);
-        toast.success("Success!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    UsersRepository.login(this);
   }
 
   render() {
