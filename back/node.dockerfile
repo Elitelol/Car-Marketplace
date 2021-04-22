@@ -1,15 +1,12 @@
-FROM        node:alpine
+FROM node:alpine
 
-LABEL       author="Dan Wahlin"
+ENV NODE_ENV=develop
+ENV PORT=3000
 
-ENV         NODE_ENV=develop
-ENV         PORT=3000
+WORKDIR /var/www
+COPY package*.json ./
+RUN npm install
+COPY . .
 
-WORKDIR     /var/www
-COPY        package.json package-lock.json ./
-RUN         npm install
-
-COPY        . ./
-EXPOSE      $PORT
-
+EXPOSE $PORT
 ENTRYPOINT  ["npm", "start"]
