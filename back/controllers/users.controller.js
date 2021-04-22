@@ -125,7 +125,7 @@ const updateUser = async (req, res) => {
       return res.status(403).json({message: "Unauthorized"});
     }
 
-    const user = User.find({username: req.currentUser.username});
+    const user = await User.find({username: req.currentUser.username});
 
     if(password.length > 0 && password === passwordRepeated){
       newPassword = await bcrypt.hash(password, 10);
