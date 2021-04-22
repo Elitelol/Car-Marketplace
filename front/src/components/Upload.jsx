@@ -40,8 +40,6 @@ export default class Upload extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    console.log(this.state);
-
     axios.post(
       API_CONFIG.URL + "/cars/create",
       {

@@ -1,19 +1,28 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./../styles/main.scss";
 
 export default class Car extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: this.props.carData,
+    };
+  }
+
   render() {
     return (
       <div className="col-md-6">
         <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div className="col p-4 d-flex flex-column position-static">
-            <strong className="d-inline-block mb-2 text-primary">Le Car</strong>
-            <h3 className="mb-0">le Model</h3>
-            <div className="mb-1 text-muted">2099-11-22</div>
+            <strong className="d-inline-block mb-2 text-primary">{this.state.data.make}</strong>
+            <h3 className="mb-0">{this.state.data.model}</h3>
+            <div className="mb-1 text-muted">{this.state.data.posted}</div>
             <p className="card-text mb-auto">Ka tiek nuo trala</p>
-            <a href="/details" className="stretched-link">
+            <Link to="/details" className="stretched-link">
               Show more
-            </a>
+            </Link>
           </div>
           <div className="col-auto d-none d-lg-block">
             <svg
