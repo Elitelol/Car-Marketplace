@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
 import CarsRepository from "../services/api/cars";
 
 export default class CarDetails extends Component {
@@ -13,7 +13,7 @@ export default class CarDetails extends Component {
   }
 
   componentDidMount() {
-    if (this.state.carId) CarsRepository.fetchCar(this);
+    if(this.state.carId) CarsRepository.fetchCar(this);
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class CarDetails extends Component {
             />
           </div>
         </div>
-        <button className="btn btn-danger" onClick={CarsRepository.deleteCar}>
+        <button className="btn btn-danger" onClick={() => CarsRepository.deleteCar(this)}>
           Delete
         </button>
       </div>
