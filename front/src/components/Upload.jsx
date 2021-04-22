@@ -57,6 +57,7 @@ export default class Upload extends Component {
       )
       .then((res) => {
         if (res.data != null) toast.info(res.data.message);
+        window.location.assign("/");
       })
       .catch((error) => {
         if (error != null && error.response != null)
