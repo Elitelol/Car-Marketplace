@@ -119,7 +119,7 @@ const updateUser = async (req, res) => {
   const {username} = req.params;
 
   try{
-    const newPassword;
+    const newPassword = " ";
 
     if(req.currentUser.username != username){
       return res.status(403).json({message: "Unauthorized"});
