@@ -105,49 +105,49 @@ const deleteUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  try{
+  try {
     const users = await User.find().select("-cars").select("-password");
     res.send(200).json(users);
   }
-  catch(error){
-    res.status(500).json({message: "Something wrong with server " + error});
+  catch (error) {
+    res.status(500).json({ message: "Something wrong with server " + error });
   }
 }
 
 const updateUser = async (req, res) => {
-  const toUpdate = {name, password, repeatedPassword, picture} = req.body;
-  const {username} = req.params;
+  const toUpdate = { name, password, passwordRepeated, picture } = req.body;
+  const { username } = req.params;
 
-  try{
+  try {
     const newPassword = " ";
 
-    if(req.currentUser.username != username){
-      return res.status(403).json({message: "Unauthorized"});
+    if (req.currentUser.username != username) {
+      return res.status(403).json({ message: "Unauthorized" });
     }
 
-    const user = await User.find({username: req.currentUser.username});
+    const user = await User.find({ username: req.currentUser.username });
 
-    if(password.length > 0 && password === passwordRepeated){
+    if (password.length > 0 && password === passwordRepeated) {
       newPassword = await bcrypt.hash(password, 10);
     }
-    else if(password !== passwordRepeated){
-      return res.status(400).json({message: "Passwords dont't match"});
+    else if (password !== passwordRepeated) {
+      return res.status(400).json({ message: "Passwords dont't match" });
     }
-    else{
-      newPassword = await User.find({username: req.currentUser.username}).password;
+    else {
+      newPassword = await User.find({ username: req.currentUser.username }).password;
     }
 
-    if(!name) name = user.name;
-    if(!picture) picture = user.picture;
+    if (!name) name = user.name;
+    if (!picture) picture = user.picture;
 
-    const updated = {name, newPassword, picture};
+    const updated = { name, newPassword, picture };
 
     await User.findOneAndUpdate(username, updated);
 
-    res.status(200).json({message: "Profile updated"});
+    res.status(200).json({ message: "Profile updated" });
   }
-  catch(error){
-    res.status(500).json({message: "Something wrong with server " + error});
+  catch (error) {
+    res.status(500).json({ message: "Something wrong with server " + error });
   }
 }
 
