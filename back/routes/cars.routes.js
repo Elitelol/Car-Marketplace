@@ -4,7 +4,7 @@ const {addCar, getCar, getAllCars, deleteCar, updateCar} = require('../controlle
 
 const router = express.Router();
 
-router.post("/create", auth, addCar);
+router.put("/create", auth, addCar);
 router.get("/:carId", getCar);
 router.get("", getAllCars);
 router.delete("/delete/:carId", auth, deleteCar);

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import API_CONFIG from "./../config/api.config";
-import authHeader from "./../services/authHeader";
+import { ToastContainer } from "react-toastify";
+import CarsRepository from "../services/api/cars";
 
 export default class Upload extends Component {
   constructor(props) {
@@ -42,31 +40,7 @@ export default class Upload extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    axios
-      .post(
-        API_CONFIG.URL + "/cars/create",
-        {
-          make: this.state.make,
-          model: this.state.model,
-          year: this.state.year,
-          price: this.state.price,
-          description: this.state.description,
-          picture: this.state.pictureEncoded,
-        },
-        { headers: authHeader() }
-      )
-      .then((res) => {
-        if (res.data != null) toast.info(res.data.message);
-        window.location.assign("/");
-      })
-      .catch((error) => {
-        if (error != null && error.response != null)
-          toast.error(error.response.data.message);
-        else
-          toast.error(
-            "Something wrong happend!\nPlease contact technical support."
-          );
-      });
+    CarsRepository.createCar(this);
   }
 
   render() {

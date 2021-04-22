@@ -46,6 +46,34 @@ class CarsRepository {
       });
   }
 
+  createCar(comp) {
+    axios
+      .put(
+        API_CONFIG.URL + "/cars/create",
+        {
+          make: comp.state.make,
+          model: comp.state.model,
+          year: comp.state.year,
+          price: comp.state.price,
+          description: comp.state.description,
+          picture: comp.state.pictureEncoded,
+        },
+        { headers: authHeader() }
+      )
+      .then((res) => {
+        if (res.data != null) toast.info(res.data.message);
+        window.location.assign("/");
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
   deleteCar(comp) {
     axios
       .delete(API_CONFIG.URL + "/cars/delete/" + comp.state.carId, {
