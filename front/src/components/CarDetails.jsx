@@ -34,7 +34,7 @@ export default class CarDetails extends Component {
                 <td>{this.state.data.model}</td>
               </tr>
               <tr>
-                <td>Year:</td>
+                <td>Manufacture date:</td>
                 <td>
                   {this.state.data.year
                     ? this.state.data.year.substring(0, 10)
