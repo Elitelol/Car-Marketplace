@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/login" component={Login}>
             {authService.isLoggedIn() && <Redirect to="/" />}
           </Route>
-          <Route path="/upload" component={Upload}>
+          <Route path="/upload/:id?" component={Upload}>
             {!authService.isLoggedIn() && <Redirect to="/" />}
           </Route>
           <Route path="/details/:id" component={CarDetails}></Route>

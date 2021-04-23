@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
+import { Link } from "react-router-dom";
 import CarsRepository from "../services/api/cars";
 import authService from "../services/auth.service";
 
@@ -65,12 +66,20 @@ export default class CarDetails extends Component {
           </div>
         </div>
         {this.state.data.ownerUsername == authService.getCurrentUser() ? (
-          <button
-            className="btn btn-danger"
-            onClick={() => CarsRepository.deleteCar(this)}
-          >
-            Delete
-          </button>
+          <React.Fragment>
+            <Link
+              className="btn btn-primary"
+              to={"/upload/" + this.state.carId}
+            >
+              Update
+            </Link>
+            <button
+              className="btn btn-danger"
+              onClick={() => CarsRepository.deleteCar(this)}
+            >
+              Delete
+            </button>
+          </React.Fragment>
         ) : (
           ""
         )}

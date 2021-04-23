@@ -14,11 +14,16 @@ export default class Upload extends Component {
       description: "",
       picture: "",
       pictureEncoded: "",
+      carId: props.match.params.id,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.carId != null) CarsRepository.fetchCarForUpdate(this);
   }
 
   handleInputChange(event) {
@@ -40,7 +45,9 @@ export default class Upload extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    CarsRepository.createCar(this);
+    if (this.state.carId != null) {
+      CarsRepository.updateCar(this);
+    } else CarsRepository.createCar(this);
   }
 
   render() {

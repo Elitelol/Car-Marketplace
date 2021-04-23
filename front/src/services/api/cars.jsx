@@ -46,6 +46,34 @@ class CarsRepository {
       });
   }
 
+  fetchCarForUpdate(comp) {
+    axios
+      .get(API_CONFIG.URL + "/cars/" + comp.state.carId, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data)
+      .then((res) => {
+        if (res != null) {
+          comp.setState({
+            make: res.make,
+            model: res.model,
+            year: res.year,
+            price: res.price,
+            description: res.description,
+            pictureEncoded: res.picture,
+          });
+        }
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
   createCar(comp) {
     axios
       .put(
@@ -81,6 +109,34 @@ class CarsRepository {
       })
       .then((res) => {
         toast.info(res.data.message);
+        window.location.assign("/");
+      })
+      .catch((error) => {
+        if (error != null && error.response != null)
+          toast.error(error.response.data.message);
+        else
+          toast.error(
+            "Something wrong happend!\nPlease contact technical support."
+          );
+      });
+  }
+
+  updateCar(comp) {
+    axios
+      .patch(
+        API_CONFIG.URL + "/cars/update/" + comp.state.carId,
+        {
+          make: comp.state.make,
+          model: comp.state.model,
+          year: comp.state.year,
+          price: comp.state.price,
+          description: comp.state.description,
+          picture: comp.state.pictureEncoded,
+        },
+        { headers: authHeader() }
+      )
+      .then((res) => {
+        if (res.data != null) toast.info(res.data.message);
         window.location.assign("/");
       })
       .catch((error) => {
