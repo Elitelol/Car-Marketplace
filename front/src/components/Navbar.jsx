@@ -62,12 +62,16 @@ class Navbar extends Component {
 
         <div className="nav-scroller py-1 mb-2">
           <nav className="nav d-flex justify-content-between">
-          <Link to="/" className="p-2 link-secondary">
-                Car list
+            <Link to="/" className="p-2 link-secondary">
+              Car list
             </Link>
-            <Link to="/upload" className="p-2 link-secondary">
-              Upload
-            </Link>
+            {authService.isLoggedIn() ? (
+              <Link to="/upload" className="p-2 link-secondary">
+                Upload
+              </Link>
+            ) : (
+              ""
+            )}
           </nav>
         </div>
       </div>
