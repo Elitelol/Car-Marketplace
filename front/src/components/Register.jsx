@@ -24,6 +24,7 @@ export default class Register extends Component {
   handleRegister(event) {
     event.preventDefault();
     UsersRepository.register(this);
+    window.location.assign("/login");
   }
 
   render() {
