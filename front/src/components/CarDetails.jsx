@@ -65,7 +65,7 @@ export default class CarDetails extends Component {
             />
           </div>
         </div>
-        {this.state.data.ownerUsername == authService.getCurrentUser() ? (
+        {this.state.data.ownerUsername === authService.getCurrentUser() ? (
           <React.Fragment>
             <Link
               className="btn btn-primary"
