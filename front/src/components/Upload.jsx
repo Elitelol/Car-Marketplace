@@ -103,7 +103,20 @@ export default class Upload extends Component {
             ></input>
           </div>
           <div className="form-group">
-            <label htmlFor="picture">Image</label>
+            <label className="d-flex flex-row" htmlFor="picture">
+              Image
+            </label>
+            {this.state.pictureEncoded ? (
+              <img
+                src={this.state.pictureEncoded}
+                className="flex-row bd-placeholder-img img-object-fit-cover"
+                width="200"
+                height="250"
+                alt="User"
+              />
+            ) : (
+              ""
+            )}
             <input
               className="d-flex"
               name="picture"
