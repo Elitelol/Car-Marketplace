@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const test = "ab";
+const authConfig = require("./../config/auth.config");
 
 const auth = (req, res, next) => {
     const token = req.header("auth-token");
@@ -10,7 +9,7 @@ const auth = (req, res, next) => {
     }
 
     try {
-        const verified = jwt.verify(token, test);
+        const verified = jwt.verify(token, authConfig.TOKEN_SECRET);
         req.currentUser = verified
         next();
     }

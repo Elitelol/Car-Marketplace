@@ -1,9 +1,8 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authConfig = require("./../config/auth.config");
 const Car = require("../models/car.model");
-
-const test = "ab";
 
 const signIn = async (req, res) => {
   const { username, password } = req.body;
@@ -21,8 +20,8 @@ const signIn = async (req, res) => {
       return res.status(400).json({ message: "Invalid password." });
     }
 
-    const token = jwt.sign({ username: user.username }, test, {
-      expiresIn: "1h",
+    const token = jwt.sign({ username: user.username }, authConfig.TOKEN_SECRET, {
+      expiresIn: "1200s",
     });
     res.header("auth-token", token).send(token);
   } catch (error) {
@@ -56,8 +55,8 @@ const signUp = async (req, res) => {
       picture: ""
     });
 
-    const token = jwt.sign({ username: newUser.username }, test, {
-      expiresIn: "1h",
+    const token = jwt.sign({ username: newUser.username }, authConfig.TOKEN_SECRET, {
+      expiresIn: "1200s",
     });
     res.header("auth-token", token).send(token);
   } catch (error) {

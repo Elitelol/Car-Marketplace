@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "car-marketplace-secret-key"
+    TOKEN_SECRET: "car-marketplace-secret-key"
 };
