@@ -1,6 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const {addCar, getCar, getAllCars, deleteCar, updateCar} = require('../controllers/cars.controller');
+const { addCar, getCar, getAllCars, deleteCar, updateCar } = require('../controllers/cars.controller');
 
 const router = express.Router();
 
