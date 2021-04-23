@@ -76,6 +76,8 @@ export default class User extends Component {
               type="text"
               value={this.state.name}
               onChange={this.handleInputChange}
+              minLength="2"
+              maxLength="20"
               required
             ></input>
           </div>
@@ -96,6 +98,8 @@ export default class User extends Component {
               type="password"
               value={this.state.password}
               onChange={this.handleInputChange}
+              minLength="8"
+              maxLength="20"
               required
             ></input>
           </div>
@@ -107,6 +111,8 @@ export default class User extends Component {
               type="password"
               value={this.state.passwordRepeated}
               onChange={this.handleInputChange}
+              minLength="8"
+              maxLength="20"
               required
             ></input>
           </div>
