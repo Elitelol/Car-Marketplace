@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import CarsRepository from "../services/api/cars";
+import authService from "../services/auth.service";
 
 export default class CarDetails extends Component {
   constructor(props) {
@@ -63,12 +64,16 @@ export default class CarDetails extends Component {
             />
           </div>
         </div>
-        <button
-          className="btn btn-danger"
-          onClick={() => CarsRepository.deleteCar(this)}
-        >
-          Delete
-        </button>
+        {this.state.data.ownerUsername == authService.getCurrentUser() ? (
+          <button
+            className="btn btn-danger"
+            onClick={() => CarsRepository.deleteCar(this)}
+          >
+            Delete
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
