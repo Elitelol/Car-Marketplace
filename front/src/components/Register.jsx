@@ -31,6 +31,7 @@ export default class Register extends Component {
     return (
       <div>
         <ToastContainer />
+        <h3>Register</h3>
         <form onSubmit={this.handleRegister}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
