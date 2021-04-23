@@ -31,7 +31,7 @@ export default class Login extends Component {
         <ToastContainer />
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
-            <label htmlFor="username">Email</label>
+            <label htmlFor="username">Username</label>
             <input
               className="form-control"
               name="username"
