@@ -60,6 +60,7 @@ class UsersRepository {
           name: data.name,
           username: data.username,
           joined: data.joined.substring(0, 10),
+          pictureEncoded: data.picture,
         });
       })
       .catch((error) => {

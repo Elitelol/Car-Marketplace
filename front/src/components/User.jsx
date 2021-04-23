@@ -96,6 +96,7 @@ export default class User extends Component {
               type="password"
               value={this.state.password}
               onChange={this.handleInputChange}
+              required
             ></input>
           </div>
           <div className="form-group">
@@ -106,10 +107,24 @@ export default class User extends Component {
               type="password"
               value={this.state.passwordRepeated}
               onChange={this.handleInputChange}
+              required
             ></input>
           </div>
           <div className="form-group">
-            <label htmlFor="picture">Profile picture</label>
+            <label className="d-flex flex-row" htmlFor="picture">
+              Profile picture
+            </label>
+            {this.state.pictureEncoded ? (
+              <img
+                src={this.state.pictureEncoded}
+                className="flex-row bd-placeholder-img img-object-fit-cover"
+                width="200"
+                height="250"
+                alt="User"
+              />
+            ) : (
+              ""
+            )}
             <input
               className="d-flex"
               name="picture"
