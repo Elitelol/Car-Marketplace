@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  node:
+    container_name: node
+    image: nodeapp
+    build:
+      context: .
+      dockerfile: node.dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - nodeapp-network
+    volumes:
+      - ./logs:/var/www/logs
+    depends_on:
+      - mongodb
+
+  mongodb:
+    container_name: db
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker/.data/db:/var/lib/mongodb
+    networks:
+      - nodeapp-network
+
+networks:
+  nodeapp-network:
+    driver: bridge
