@@ -42,7 +42,7 @@ export default class Register extends Component {
               value={this.state.username}
               onChange={this.handleInputChange}
               minLength="5"
-              minLength="20"
+              maxLength="20"
               required
             ></input>
           </div>
