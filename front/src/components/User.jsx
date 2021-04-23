@@ -56,6 +56,7 @@ export default class User extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
+        <h3>User</h3>
         <form onSubmit={this.handleUserUpdate}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
