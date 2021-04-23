@@ -73,7 +73,7 @@ const getUserCar = async (req, res) => {
 
 const getAllCars = async (req, res) => {
     try{
-        const cars = Car.all();
+        const cars = await Car.find();
         
         res.status(200).send(cars);   
     }
