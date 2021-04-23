@@ -41,6 +41,8 @@ export default class Register extends Component {
               type="text"
               value={this.state.username}
               onChange={this.handleInputChange}
+              minLength="5"
+              minLength="20"
               required
             ></input>
           </div>
@@ -52,6 +54,8 @@ export default class Register extends Component {
               type="text"
               value={this.state.name}
               onChange={this.handleInputChange}
+              minLength="2"
+              maxLength="20"
               required
             ></input>
           </div>
@@ -63,6 +67,8 @@ export default class Register extends Component {
               type="password"
               value={this.state.password}
               onChange={this.handleInputChange}
+              minLength="8"
+              maxLength="8"
               required
             ></input>
           </div>
@@ -74,6 +80,8 @@ export default class Register extends Component {
               type="password"
               value={this.state.repeatedPassword}
               onChange={this.handleInputChange}
+              minLength="8"
+              maxLength="20"
               required
             ></input>
           </div>
