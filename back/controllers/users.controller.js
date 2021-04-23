@@ -27,6 +27,7 @@ const signIn = async (req, res) => {
     res.header("auth-token", token).send(token);
   } catch (error) {
     res.status(500).json({ message: "Something wrong with server." });
+    console.log(error);
   }
 };
 
@@ -52,6 +53,7 @@ const signUp = async (req, res) => {
       name,
       username,
       password: hashedPassword,
+      picture: ""
     });
 
     const token = jwt.sign({ username: newUser.username }, test, {
@@ -119,28 +121,22 @@ const updateUser = async (req, res) => {
   const { username } = req.params;
 
   try {
-    let newPassword = " ";
-
     if (req.currentUser.username != username) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
-    const user = await User.find({ username: req.currentUser.username });
+    const user = await User.find({ username });
 
-    if (password.length > 0 && password === passwordRepeated) {
-      newPassword = await bcrypt.hash(password, 10);
-    }
-    else if (password.length > 0 && password !== passwordRepeated) {
-      return res.status(400).json({ message: "Passwords dont't match" });
-    }
-    else {
-      newPassword = await User.find({ username: req.currentUser.username }).password;
+    let newPassword = user.password;
+    if (password.length > 0) {
+      if (password === passwordRepeated) newPassword = await bcrypt.hash(password, 10);
+      else return res.status(400).json({ message: "Passwords dont't match" });
     }
 
     if (!name) name = user.name;
     if (!picture) picture = user.picture;
 
-    const updated = { name, password: newPassword, picture };
+    const updated = { username, name, password: newPassword, picture };
 
     await User.findOneAndUpdate(username, updated);
 
@@ -148,6 +144,7 @@ const updateUser = async (req, res) => {
   }
   catch (error) {
     res.status(500).json({ message: "Something wrong with server " + error });
+    console.log(error);
   }
 }
 
